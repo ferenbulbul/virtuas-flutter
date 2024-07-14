@@ -75,7 +75,7 @@ class AdminPage extends StatelessWidget {
                 ),
                 fillColor: Colors.orange,
                 child: Text(
-                  'Button 3 ',
+                  'Category Add',
                   style: TextStyle(color: Colors.white),
                 ),
               ),

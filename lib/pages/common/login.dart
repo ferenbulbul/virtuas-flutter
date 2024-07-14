@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/const/roles.dart';
 import 'package:flutter_application_1/pages/admin/admin_landing.dart';
 import 'package:flutter_application_1/pages/client/client_landing.dart';
 import 'package:http/http.dart' as http;
@@ -56,16 +57,16 @@ class _LoginFormState extends State<LoginForm> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setInt('userId', id); // Kullanıcı ID'sini depoluyoruz
 
-      if (role == "admin") {
+      if (role == Roles.Admin) {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => AdminPage(text: username)),
         );
       }
-      if (role == "Customer") {
+      if (role == Roles.Client) {
         Navigator.of(context).pushReplacementNamed('/clientlandingpage');
       }
-      if (role == "clinic") {
+      if (role == Roles.Clinic) {
         Navigator.of(context).pushReplacementNamed('/cliniclandingpage');
       }
     } else {
