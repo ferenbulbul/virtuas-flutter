@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/pages/clinic/possible_customers.dart';
 import 'package:flutter_application_1/pages/common/login.dart';
 
 class ClinicLandingPage extends StatefulWidget {
@@ -6,7 +7,17 @@ class ClinicLandingPage extends StatefulWidget {
   _ClinicLandingPageState createState() => _ClinicLandingPageState();
 }
 
-class _ClinicLandingPageState extends State<ClinicLandingPage> {
+class _ClinicLandingPageState extends State<ClinicLandingPage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 4, vsync: this);
+    _tabController.index = 0; // Default to the Possible Customers tab
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,15 +39,18 @@ class _ClinicLandingPageState extends State<ClinicLandingPage> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'Vituras',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
+            Container(
+              height: 150.0,
+              child: DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
+                child: Text(
+                  'Vituras',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                  ),
                 ),
               ),
             ),
@@ -44,34 +58,53 @@ class _ClinicLandingPageState extends State<ClinicLandingPage> {
               leading: Icon(Icons.notifications),
               title: Text('Possible customers'),
               onTap: () {
-                // Update the state or navigate to a different screen
+                _tabController.index = 0;
+                Navigator.of(context).pop(); // Close the drawer
               },
             ),
             ListTile(
               leading: Icon(Icons.home),
               title: Text('Services'),
               onTap: () {
-                // Update the state or navigate to a different screen
+                _tabController.index = 1;
+                Navigator.of(context).pop(); // Close the drawer
               },
             ),
             ListTile(
               leading: Icon(Icons.arrow_back),
               title: Text('Sent Offers'),
               onTap: () {
-                // Update the state or navigate to a different screen
+                _tabController.index = 2;
+                Navigator.of(context).pop(); // Close the drawer
               },
             ),
             ListTile(
               leading: Icon(Icons.person),
-              title: Text('Clinic Info '),
+              title: Text('Clinic Info'),
               onTap: () {
-                // Update the state or navigate to a different screen
+                _tabController.index = 3;
+                Navigator.of(context).pop(); // Close the drawer
               },
             ),
           ],
         ),
       ),
-      body: Center(child: LoginPage()),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          PossibleClientPreDataScreen(),
+          // Replace the following with your actual pages
+          Center(child: Text('Services Page')),
+          Center(child: Text('Sent Offers Page')),
+          Center(child: Text('Clinic Info Page')),
+        ],
+      ),
     );
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 }

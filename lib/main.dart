@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ClinicLandingPage(), // Başlangıç sayfası
+      home: LoginPage(), // Başlangıç sayfası
       routes: {
         '/admin': (context) => AdminPage(
               text: "",
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         '/register': (context) => RegistrationPage(),
         '/login': (context) => LoginPage(),
         '/clientlandingpage': (context) => ClientLandingPage(),
-        '/cliniclandingpage': (context) => PossibleClientPreDataScreen(),
+        '/cliniclandingpage': (context) => ClinicLandingPage(),
 
         // Diğer rotaları buraya ekleyebilirsiniz
       },
