@@ -1,6 +1,6 @@
 class Question {
   final int id;
-  final String title;
+  String title;
   final int categoryId;
 
   Question({required this.id, required this.title, required this.categoryId});

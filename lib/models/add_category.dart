@@ -1,11 +1,44 @@
 import 'package:flutter_application_1/models/category.dart';
+import 'package:flutter_application_1/models/question.dart';
+
+import 'dart:convert';
 
 class AddCategory {
-  Category category;
-  List<String> questions;
+  int id;
+  String title;
+  String description;
+  int credit;
+  List<Question> questions;
 
   AddCategory({
-    required this.category,
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.credit,
     required this.questions,
   });
+
+  factory AddCategory.fromJson(Map<String, dynamic> json) {
+    var questionsList = json['questions'] as List;
+    List<Question> questions =
+        questionsList.map((question) => Question.fromJson(question)).toList();
+
+    return AddCategory(
+      id: json['id'],
+      title: json['title'],
+      description: json['description'],
+      credit: json['credit'],
+      questions: questions,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'credit': credit,
+      'questions': questions.map((question) => question.toJson()).toList(),
+    };
+  }
 }

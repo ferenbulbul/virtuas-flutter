@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/models/add_category.dart';
 import 'package:flutter_application_1/models/category.dart';
+import 'package:flutter_application_1/models/question.dart';
 import 'package:flutter_application_1/services/dataService.dart';
 
 class AddCategoryPage extends StatefulWidget {
@@ -135,20 +136,21 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
 
   void _saveCategory() {
     // Kullanıcıdan alınan bilgilerle yeni bir kategori ve sorular oluştur
-    Category newCategory = Category(
+
+    List<Question> questions = [];
+    questionControllers.forEach((controller) {
+      String questionText = controller.text.trim();
+      if (questionText.isNotEmpty) {
+        Question question = Question(categoryId: 0, id: 0, title: questionText);
+        questions.add(question);
+      }
+    });
+
+    AddCategory addCategory = AddCategory(
       id: 0,
       title: titleController.text,
       description: descriptionController.text,
       credit: int.parse(creditController.text),
-    );
-
-    List<String> questions = questionControllers
-        .map((controller) => controller.text)
-        .where((question) => question.isNotEmpty)
-        .toList();
-
-    AddCategory addCategory = AddCategory(
-      category: newCategory,
       questions: questions,
     );
 
@@ -156,34 +158,12 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
     // Örneğin, bu bilgileri bir API'ye göndermek için bir fonksiyon çağrılabilir.
     _processCategory(addCategory);
 
-    // Kategori ve soruları yazdıralım (örnek amaçlı)
-    print('Category ID: ${addCategory.category.id}');
-    print('Category Title: ${addCategory.category.title}');
-    print('Category Description: ${addCategory.category.description}');
-    print('Category Credit: ${addCategory.category.credit}');
-
-    print('Questions:');
-    addCategory.questions.forEach((question) {
-      print(question);
-    });
-
-    // Bilgileri kaydettikten sonra sayfayı temizleme (opsiyonel)
     _clearFields();
+    _navigateToHomePage();
   }
 
   void _processCategory(AddCategory addCategory) {
-    // Burada kategori ve soruları işleme alabilirsiniz
-    // Örneğin, bir API'ye göndermek için HTTP isteği yapılabilir.
-
-    // Örneğin, konsola yazdırma işlemleri:
-    print('Saving category...');
-    print('Category Title: ${addCategory.category.title}');
-    print('Category Description: ${addCategory.category.description}');
-    print('Category Credit: ${addCategory.category.credit}');
-    print('Questions:');
-    addCategory.questions.forEach((question) {
-      print(question);
-    });
+    createCategory(addCategory);
   }
 
   void _clearFields() {
@@ -206,6 +186,10 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
     setState(() {
       questionControllers.removeAt(index);
     });
+  }
+
+  void _navigateToHomePage() {
+    Navigator.of(context).pushReplacementNamed('/clientlandingpage');
   }
 }
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/admin/add_clinic.dart';
 import 'package:flutter_application_1/pages/admin/list_clinics.dart';
+import 'package:flutter_application_1/pages/category/add_category.dart';
+import 'package:flutter_application_1/pages/category/list_category.dart';
 
 class AdminPage extends StatelessWidget {
   final String text;
@@ -67,8 +69,10 @@ class AdminPage extends StatelessWidget {
               height: buttonWidth,
               child: RawMaterialButton(
                 onPressed: () {
-                  // Button 3 pressed
-                  print('Button 3 pressed');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AddCategoryPage()),
+                  );
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(buttonWidth / 8),
@@ -76,6 +80,29 @@ class AdminPage extends StatelessWidget {
                 fillColor: Colors.orange,
                 child: Text(
                   'Category Add',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              width: buttonWidth,
+              height: buttonWidth,
+              child: RawMaterialButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CategoryListPage()),
+                  );
+                },
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(buttonWidth / 8),
+                ),
+                fillColor: Colors.amber,
+                child: Text(
+                  'List Categories',
                   style: TextStyle(color: Colors.white),
                 ),
               ),

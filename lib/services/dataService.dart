@@ -1,6 +1,7 @@
 // data_service.dart
 
 import 'dart:convert';
+import 'package:flutter_application_1/models/add_category.dart';
 import 'package:flutter_application_1/models/applications_detail.dart';
 import 'package:flutter_application_1/models/category.dart';
 import 'package:flutter_application_1/models/clinic.dart';
@@ -171,5 +172,42 @@ Future<PossibleClientPreDataResponse> fetchApplicationsPreData(
     return PossibleClientPreDataResponse.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed to load applications');
+  }
+}
+
+Future<void> createCategory(AddCategory addCategory) async {
+  // Örnek API URL
+  String apiUrl = 'https://localhost:7128/api/Category/Add';
+
+  try {
+    // Kategori bilgilerini ve soruları JSON formatına çevir
+    String jsonBody = jsonEncode({
+      'id': addCategory.id,
+      'title': addCategory.title,
+      'description': addCategory.description,
+      'credit': addCategory.credit,
+      'questions':
+          addCategory.questions.map((question) => question.toJson()).toList(),
+    });
+
+    // API'ye POST isteği gönder
+    var response = await http.post(
+      Uri.parse(apiUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonBody,
+    );
+
+    if (response.statusCode == 200) {
+      // Başarılı bir şekilde kategori oluşturuldu
+      print('Category created successfully!');
+    } else {
+      // Başarısız durumda hata mesajı al
+      print('Failed to create category: ${response.statusCode}');
+    }
+  } catch (e) {
+    // Hata durumunda hata mesajı yazdır
+    print('Exception occurred: $e');
   }
 }
