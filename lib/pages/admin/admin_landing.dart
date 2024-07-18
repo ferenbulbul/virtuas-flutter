@@ -7,14 +7,14 @@ import 'package:flutter_application_1/pages/category/list_category.dart';
 class AdminPage extends StatelessWidget {
   final String text;
 
-  AdminPage({required this.text});
+  const AdminPage({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
     double buttonWidth = MediaQuery.of(context).size.width / 4;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Admin Page'),
+        title: const Text('Admin Page'),
       ),
       body: Center(
         child: Column(
@@ -28,20 +28,20 @@ class AdminPage extends StatelessWidget {
                   // Button 1 pressed
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AddClinicPage()),
+                    MaterialPageRoute(builder: (context) => const AddClinicPage()),
                   );
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(buttonWidth / 8),
                 ),
                 fillColor: Colors.blue,
-                child: Text(
+                child: const Text(
                   'Clinc Add',
                   style: TextStyle(color: Colors.white),
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             SizedBox(
               width: buttonWidth,
               height: buttonWidth,
@@ -50,20 +50,20 @@ class AdminPage extends StatelessWidget {
                   // Button 2 pressed
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ClinicsPage()),
+                    MaterialPageRoute(builder: (context) => const ClinicsPage()),
                   );
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(buttonWidth / 8),
                 ),
                 fillColor: Colors.green,
-                child: Text(
+                child: const Text(
                   'List Clinics',
                   style: TextStyle(color: Colors.white),
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             SizedBox(
               width: buttonWidth,
               height: buttonWidth,
@@ -71,20 +71,20 @@ class AdminPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AddCategoryPage()),
+                    MaterialPageRoute(builder: (context) => const AddCategoryPage()),
                   );
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(buttonWidth / 8),
                 ),
                 fillColor: Colors.orange,
-                child: Text(
+                child: const Text(
                   'Category Add',
                   style: TextStyle(color: Colors.white),
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             SizedBox(
@@ -94,14 +94,14 @@ class AdminPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => CategoryListPage()),
+                    MaterialPageRoute(builder: (context) => const CategoryListPage()),
                   );
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(buttonWidth / 8),
                 ),
                 fillColor: Colors.amber,
-                child: Text(
+                child: const Text(
                   'List Categories',
                   style: TextStyle(color: Colors.white),
                 ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/answer.dart';
-import 'package:flutter_application_1/models/category.dart';
 import 'package:flutter_application_1/models/summary.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -9,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SummaryPage extends StatefulWidget {
   final SummaryData summaryData;
 
-  SummaryPage({required this.summaryData});
+  const SummaryPage({super.key, required this.summaryData});
 
   @override
   State<SummaryPage> createState() => _SummaryPageState();
@@ -58,9 +57,9 @@ class _SummaryPageState extends State<SummaryPage> {
 
     if (response.statusCode == 200) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Registered successfully!')),
+        const SnackBar(content: Text('Registered successfully!')),
       );
-      Future.delayed(Duration(seconds: 1), () {
+      Future.delayed(const Duration(seconds: 1), () {
         Navigator.of(context).pushReplacementNamed('/login');
       });
     } else {
@@ -72,26 +71,26 @@ class _SummaryPageState extends State<SummaryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Summary Page')),
+      appBar: AppBar(title: const Text('Summary Page')),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Category Details:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text('Kategori Adı: ${widget.summaryData.category.title}'),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text('Açıklama: ${widget.summaryData.category.description}'),
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
               'Answers Summary:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Expanded(
               child: ListView.builder(
                 itemCount: widget.summaryData.answers.length,

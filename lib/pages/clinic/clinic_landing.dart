@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/clinic/possible_customers.dart';
-import 'package:flutter_application_1/pages/common/login.dart';
 
 class ClinicLandingPage extends StatefulWidget {
+  const ClinicLandingPage({super.key});
+
   @override
   _ClinicLandingPageState createState() => _ClinicLandingPageState();
 }
@@ -22,7 +23,7 @@ class _ClinicLandingPageState extends State<ClinicLandingPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Clinic Landing Page'),
+        title: const Text('Clinic Landing Page'),
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
@@ -39,7 +40,7 @@ class _ClinicLandingPageState extends State<ClinicLandingPage>
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            Container(
+            const SizedBox(
               height: 150.0,
               child: DrawerHeader(
                 decoration: BoxDecoration(
@@ -55,32 +56,32 @@ class _ClinicLandingPageState extends State<ClinicLandingPage>
               ),
             ),
             ListTile(
-              leading: Icon(Icons.notifications),
-              title: Text('Possible customers'),
+              leading: const Icon(Icons.notifications),
+              title: const Text('Possible customers'),
               onTap: () {
                 _tabController.index = 0;
                 Navigator.of(context).pop(); // Close the drawer
               },
             ),
             ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Services'),
+              leading: const Icon(Icons.home),
+              title: const Text('Services'),
               onTap: () {
                 _tabController.index = 1;
                 Navigator.of(context).pop(); // Close the drawer
               },
             ),
             ListTile(
-              leading: Icon(Icons.arrow_back),
-              title: Text('Sent Offers'),
+              leading: const Icon(Icons.arrow_back),
+              title: const Text('Sent Offers'),
               onTap: () {
                 _tabController.index = 2;
                 Navigator.of(context).pop(); // Close the drawer
               },
             ),
             ListTile(
-              leading: Icon(Icons.person),
-              title: Text('Clinic Info'),
+              leading: const Icon(Icons.person),
+              title: const Text('Clinic Info'),
               onTap: () {
                 _tabController.index = 3;
                 Navigator.of(context).pop(); // Close the drawer
@@ -91,7 +92,7 @@ class _ClinicLandingPageState extends State<ClinicLandingPage>
       ),
       body: TabBarView(
         controller: _tabController,
-        children: [
+        children: const [
           PossibleClientPreDataScreen(),
           // Replace the following with your actual pages
           Center(child: Text('Services Page')),

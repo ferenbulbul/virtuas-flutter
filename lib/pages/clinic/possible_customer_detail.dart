@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_application_1/models/possible_applications.dart';
 import 'package:flutter_application_1/utils/privacy.dart';
 
 class PossibleClientPreDataDetailPage extends StatelessWidget {
   final PossibleClientPreData preData;
 
-  PossibleClientPreDataDetailPage({required this.preData});
+  const PossibleClientPreDataDetailPage({super.key, required this.preData});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Possible Client Details'),
+        title: const Text('Possible Client Details'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -21,15 +20,15 @@ class PossibleClientPreDataDetailPage extends StatelessWidget {
           children: [
             Text(
               '${PrivacyUtils.maskName(preData.userName)} ${PrivacyUtils.maskName(preData.userSurname)}',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               'Category: ${preData.categoryTitle}',
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
             ),
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
               'Questions and Answers:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
@@ -45,8 +44,8 @@ class PossibleClientPreDataDetailPage extends StatelessWidget {
                 },
               ),
             ),
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
                 style:
                     TextStyle(fontWeight: FontWeight.w800, color: Colors.red),
                 'Teklif verdiğiniz takdirde müşterinin tüm detayları sizinle paylaşılacaktır.'),
@@ -55,10 +54,10 @@ class PossibleClientPreDataDetailPage extends StatelessWidget {
                 onPressed: () {
                   // Handle "Teklif Ver" button press
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Teklif Ver pressed')),
+                    const SnackBar(content: Text('Teklif Ver pressed')),
                   );
                 },
-                child: Text('Teklif Ver'),
+                child: const Text('Teklif Ver'),
               ),
             ),
           ],

@@ -3,12 +3,11 @@ import 'package:flutter_application_1/models/category.dart';
 import 'package:flutter_application_1/models/clinic.dart';
 import 'package:flutter_application_1/pages/admin/clinic_add_credit.dart';
 import 'package:flutter_application_1/services/dataService.dart';
-import 'package:flutter/services.dart';
 
 class ClinicDetailPage extends StatefulWidget {
   final Clinic clinic;
 
-  ClinicDetailPage({required this.clinic});
+  const ClinicDetailPage({super.key, required this.clinic});
 
   @override
   _ClinicDetailPageState createState() => _ClinicDetailPageState();
@@ -97,23 +96,23 @@ class _ClinicDetailPageState extends State<ClinicDetailPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Are you sure?'),
-          content: Text('bu kliniği silmek isteğinize emin misiniz?'),
+          title: const Text('Are you sure?'),
+          content: const Text('bu kliniği silmek isteğinize emin misiniz?'),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Delete'),
+              child: const Text('Delete'),
               onPressed: () {
                 _deleteClinic();
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Clinic deleted successfully!')),
+                  const SnackBar(content: Text('Clinic deleted successfully!')),
                 );
-                Future.delayed(Duration(seconds: 1), () {
+                Future.delayed(const Duration(seconds: 1), () {
                   Navigator.of(context).pushReplacementNamed('/admin');
                 });
               },
@@ -128,17 +127,17 @@ class _ClinicDetailPageState extends State<ClinicDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Clinic Details'),
+        title: const Text('Clinic Details'),
         actions: [
           IconButton(
-            icon: Icon(Icons.save),
+            icon: const Icon(Icons.save),
             onPressed: isUpdated
                 ? () {
                     saveClinic();
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Clinic updated successfully!')),
+                      const SnackBar(content: Text('Clinic updated successfully!')),
                     );
-                    Future.delayed(Duration(seconds: 1), () {
+                    Future.delayed(const Duration(seconds: 1), () {
                       Navigator.of(context).pushReplacementNamed('/admin');
                     });
                   }
@@ -152,27 +151,27 @@ class _ClinicDetailPageState extends State<ClinicDetailPage> {
           children: <Widget>[
             TextField(
               controller: titleController,
-              decoration: InputDecoration(labelText: 'Title'),
+              decoration: const InputDecoration(labelText: 'Title'),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             TextField(
               controller: descriptionController,
-              decoration: InputDecoration(labelText: 'Description'),
+              decoration: const InputDecoration(labelText: 'Description'),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             TextField(
               controller: addressController,
-              decoration: InputDecoration(labelText: 'Address'),
+              decoration: const InputDecoration(labelText: 'Address'),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             TextField(
               controller: webAddressController,
-              decoration: InputDecoration(labelText: 'Web Address'),
+              decoration: const InputDecoration(labelText: 'Web Address'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               widget.clinic.credit.toString(),
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
 
             // DropdownButtonFormField<Category>(
@@ -200,7 +199,7 @@ class _ClinicDetailPageState extends State<ClinicDetailPage> {
             //     fillColor: Colors.grey.shade200,
             //   ),
             // ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             // Wrap(
@@ -220,8 +219,8 @@ class _ClinicDetailPageState extends State<ClinicDetailPage> {
             // ),
             ElevatedButton(
               onPressed: () => _showDeleteConfirmationDialog(context),
-              child: Text('Delete'),
               style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+              child: const Text('Delete'),
             ),
             ElevatedButton(
               onPressed: () => Navigator.push(
@@ -230,8 +229,8 @@ class _ClinicDetailPageState extends State<ClinicDetailPage> {
                   builder: (context) => AddCreditPage(clinic: widget.clinic),
                 ),
               ),
-              child: Text('Add Token'),
               style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+              child: const Text('Add Token'),
             )
           ],
         ),

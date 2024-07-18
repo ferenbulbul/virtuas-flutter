@@ -7,7 +7,7 @@ import 'dart:async';
 class AddCreditPage extends StatefulWidget {
   final Clinic clinic;
 
-  AddCreditPage({required this.clinic});
+  const AddCreditPage({super.key, required this.clinic});
 
   @override
   _AddCreditPageState createState() => _AddCreditPageState();
@@ -25,15 +25,15 @@ class _AddCreditPageState extends State<AddCreditPage> {
       addCreditToclinic(widget.clinic.id, widget.clinic.credit);
       // Kredi ekleme işlemi tamamlandıktan sonra veritabanına kaydetme işlemini yapabilirsiniz
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Credit added successfully!')),
+        const SnackBar(content: Text('Credit added successfully!')),
       );
       _creditController.clear(); // Giriş alanını temizle
-      Future.delayed(Duration(seconds: 1), () {
+      Future.delayed(const Duration(seconds: 1), () {
         Navigator.of(context).pushReplacementNamed('/admin');
       });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Invalid credit amount!')),
+        const SnackBar(content: Text('Invalid credit amount!')),
       );
     }
   }
@@ -41,7 +41,7 @@ class _AddCreditPageState extends State<AddCreditPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Add Credit to Clinic')),
+      appBar: AppBar(title: const Text('Add Credit to Clinic')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -49,29 +49,29 @@ class _AddCreditPageState extends State<AddCreditPage> {
           children: [
             Text(
               'Clinic Name: ${widget.clinic.title}',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               'Existing Credit: ${widget.clinic.credit}',
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextField(
               controller: _creditController,
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.digitsOnly
               ],
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Enter Credit To Add / Remove',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _addCredit,
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         ),

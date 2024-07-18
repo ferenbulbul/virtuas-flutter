@@ -10,7 +10,7 @@ import 'package:flutter_application_1/models/summary.dart'; // Import your model
 class CategoryDetailPage extends StatefulWidget {
   final Category? category;
 
-  CategoryDetailPage({required this.category});
+  const CategoryDetailPage({super.key, required this.category});
 
   @override
   State<CategoryDetailPage> createState() => _CategoryDetailPageState();
@@ -50,12 +50,12 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
         questions.removeWhere((question) => question.id == questionId);
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Question deleted successfully')),
+        const SnackBar(content: Text('Question deleted successfully')),
       );
     } catch (e) {
       print('Error deleting question: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to delete question')),
+        const SnackBar(content: Text('Failed to delete question')),
       );
     }
   }
@@ -79,12 +79,12 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
     return Scaffold(
       appBar: AppBar(title: Text(widget.category?.title ?? 'Category Detail')),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Kategori Adı: ${widget.category?.title ?? 'Unknown'}'),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
                 'Açıklama: ${widget.category?.description ?? 'No description'}'),
             Expanded(
@@ -102,18 +102,18 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text('Delete Question'),
-                            content: Text(
+                            title: const Text('Delete Question'),
+                            content: const Text(
                                 'Are you sure you want to delete this question?'),
                             actions: <Widget>[
                               TextButton(
-                                child: Text('Cancel'),
+                                child: const Text('Cancel'),
                                 onPressed: () {
                                   Navigator.of(context).pop(false);
                                 },
                               ),
                               TextButton(
-                                child: Text('Delete'),
+                                child: const Text('Delete'),
                                 onPressed: () {
                                   Navigator.of(context).pop(true);
                                 },
@@ -125,9 +125,9 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
                     },
                     background: Container(
                       color: Colors.red,
-                      child: Icon(Icons.delete, color: Colors.white),
                       alignment: Alignment.centerRight,
-                      padding: EdgeInsets.only(right: 20.0),
+                      padding: const EdgeInsets.only(right: 20.0),
+                      child: const Icon(Icons.delete, color: Colors.white),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -136,11 +136,11 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
                         children: [
                           Text(
                             question.title,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           TextField(
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: 'Enter your answer here',
                               border: OutlineInputBorder(),
                             ),
@@ -157,11 +157,11 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
                 },
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Center(
               child: ElevatedButton(
                 onPressed: saveAndNavigateToSummaryPage,
-                child: Text('Save and View Summary'),
+                child: const Text('Save and View Summary'),
               ),
             ),
           ],

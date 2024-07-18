@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/models/add_category.dart';
-import 'package:flutter_application_1/models/category.dart';
 import 'package:flutter_application_1/models/question.dart';
 import 'package:flutter_application_1/services/dataService.dart';
 
 class AddCategoryPage extends StatefulWidget {
+  const AddCategoryPage({super.key});
+
   @override
   _AddCategoryPageState createState() => _AddCategoryPageState();
 }
@@ -20,7 +21,7 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Category'),
+        title: const Text('Add Category'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -31,27 +32,27 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
               maxLength: 60,
               minLines: 1,
               maxLines: 2,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Title',
               ),
               onChanged: (_) => _validateInputs(),
             ),
-            SizedBox(height: 12.0),
+            const SizedBox(height: 12.0),
             TextField(
               controller: descriptionController,
               maxLength: 200,
               minLines: 1,
               maxLines: 4,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Description',
               ),
               onChanged: (_) => _validateInputs(),
             ),
-            SizedBox(height: 12.0),
+            const SizedBox(height: 12.0),
             TextField(
               controller: creditController,
               decoration:
-                  InputDecoration(labelText: 'Credit', hintText: 'Max 100'),
+                  const InputDecoration(labelText: 'Credit', hintText: 'Max 100'),
               keyboardType: TextInputType.number,
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
@@ -59,17 +60,17 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
               ],
               onChanged: (_) => _validateInputs(),
             ),
-            SizedBox(height: 24.0),
-            Text(
+            const SizedBox(height: 24.0),
+            const Text(
               'Questions',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 12.0),
+            const SizedBox(height: 12.0),
             Column(
               children: List.generate(
                 questionControllers.length,
                 (index) => Padding(
-                  padding: EdgeInsets.only(bottom: 12.0),
+                  padding: const EdgeInsets.only(bottom: 12.0),
                   child: Row(
                     children: [
                       Expanded(
@@ -85,7 +86,7 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
                         ),
                       ),
                       IconButton(
-                        icon: Icon(Icons.remove_circle),
+                        icon: const Icon(Icons.remove_circle),
                         onPressed: () {
                           _removeQuestion(index);
                           _validateInputs(); // Validate inputs after removing
@@ -96,18 +97,18 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
                 ),
               ),
             ),
-            SizedBox(height: 12.0),
+            const SizedBox(height: 12.0),
             if (questionControllers.length < 5)
               ElevatedButton(
                 onPressed: () {
                   _addQuestion();
                 },
-                child: Text('Add Question'),
+                child: const Text('Add Question'),
               ),
-            SizedBox(height: 24.0),
+            const SizedBox(height: 24.0),
             ElevatedButton(
               onPressed: _isSaveButtonEnabled() ? _saveCategory : null,
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         ),
@@ -138,13 +139,13 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
     // Kullanıcıdan alınan bilgilerle yeni bir kategori ve sorular oluştur
 
     List<Question> questions = [];
-    questionControllers.forEach((controller) {
+    for (var controller in questionControllers) {
       String questionText = controller.text.trim();
       if (questionText.isNotEmpty) {
         Question question = Question(categoryId: 0, id: 0, title: questionText);
         questions.add(question);
       }
-    });
+    }
 
     AddCategory addCategory = AddCategory(
       id: 0,
@@ -171,7 +172,9 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
     titleController.clear();
     descriptionController.clear();
     creditController.clear();
-    questionControllers.forEach((controller) => controller.clear());
+    for (var controller in questionControllers) {
+      controller.clear();
+    }
   }
 
   void _addQuestion() {
@@ -199,9 +202,9 @@ class CustomRangeTextInputFormatter extends TextInputFormatter {
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    if (newValue.text == '') return TextEditingValue();
+    if (newValue.text == '') return const TextEditingValue();
     final value = int.parse(newValue.text);
-    return TextEditingValue().copyWith(
+    return const TextEditingValue().copyWith(
       text: (value >= 1 && value <= 100) ? newValue.text : oldValue.text,
     );
   }

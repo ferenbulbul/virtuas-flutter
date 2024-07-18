@@ -5,6 +5,8 @@ import 'package:flutter_application_1/services/dataService.dart';
 // fetchClinics fonksiyonunu buraya import edin
 
 class ClinicsPage extends StatefulWidget {
+  const ClinicsPage({super.key});
+
   @override
   _ClinicsPageState createState() => _ClinicsPageState();
 }
@@ -22,7 +24,7 @@ class _ClinicsPageState extends State<ClinicsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Clinics'),
+        title: const Text('Clinics'),
       ),
       body: Center(
         child: FutureBuilder<List<Clinic>>(
@@ -43,7 +45,7 @@ class _ClinicsPageState extends State<ClinicsPage> {
                       );
                     },
                     child: Container(
-                      margin: EdgeInsets.all(10.0),
+                      margin: const EdgeInsets.all(10.0),
                       child: Card(
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
@@ -52,12 +54,12 @@ class _ClinicsPageState extends State<ClinicsPage> {
                             children: <Widget>[
                               Text(
                                 snapshot.data![index].title,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(height: 8),
+                              const SizedBox(height: 8),
                               Text(snapshot.data![index].description),
-                              SizedBox(height: 8),
+                              const SizedBox(height: 8),
                               Text(snapshot.data![index].credit.toString()),
                             ],
                           ),
@@ -71,7 +73,7 @@ class _ClinicsPageState extends State<ClinicsPage> {
               return Text("${snapshot.error}");
             }
 
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           },
         ),
       ),

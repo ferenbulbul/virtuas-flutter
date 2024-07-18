@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter_application_1/pages/admin/admin_landing.dart';
-import 'package:flutter_application_1/pages/category/add_category.dart';
 import 'package:flutter_application_1/pages/client/client_landing.dart';
 import 'package:flutter_application_1/pages/client/register.dart';
 import 'package:flutter_application_1/pages/clinic/clinic_landing.dart';
-import 'package:flutter_application_1/pages/clinic/possible_customers.dart';
 import 'package:flutter_application_1/pages/common/login.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -19,10 +17,12 @@ class MyHttpOverrides extends HttpOverrides {
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,15 +30,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage(), // Başlangıç sayfası
+      home: const LoginPage(), // Başlangıç sayfası
       routes: {
-        '/admin': (context) => AdminPage(
+        '/admin': (context) => const AdminPage(
               text: "",
             ),
-        '/register': (context) => RegistrationPage(),
-        '/login': (context) => LoginPage(),
-        '/clientlandingpage': (context) => ClientLandingPage(),
-        '/cliniclandingpage': (context) => ClinicLandingPage(),
+        '/register': (context) => const RegistrationPage(),
+        '/login': (context) => const LoginPage(),
+        '/clientlandingpage': (context) => const ClientLandingPage(),
+        '/cliniclandingpage': (context) => const ClinicLandingPage(),
 
         // Diğer rotaları buraya ekleyebilirsiniz
       },

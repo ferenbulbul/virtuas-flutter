@@ -6,6 +6,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class AddClinicPage extends StatefulWidget {
+  const AddClinicPage({super.key});
+
   @override
   _AddClinicPageState createState() => _AddClinicPageState();
 }
@@ -15,10 +17,11 @@ class _AddClinicPageState extends State<AddClinicPage> {
   List<Category> categories = [];
   List<Category> selectedCategories = [];
   List<int> selectedCategoryIds = [];
-  TextEditingController _titleController = TextEditingController();
-  TextEditingController _descriptionController = TextEditingController();
-  TextEditingController _addressController = TextEditingController();
-  TextEditingController _webAddressController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _webAddressController = TextEditingController();
+  final TextEditingController _userNameController = TextEditingController();
 
   @override
   void initState() {
@@ -36,13 +39,14 @@ class _AddClinicPageState extends State<AddClinicPage> {
   List<Category> myCategories = [];
 
   Future<void> _login() async {
-    String clinicAddUrl = 'https://localhost:7128/api/clinics/add';
+    String clinicAddUrl = 'http://10.0.2.2:5241/api/clinics/add';
 
     var postData = jsonEncode({
       'title': _titleController.text,
       'description': _descriptionController.text,
       "address": _addressController.text,
       "webaddress": _webAddressController.text,
+      "userName" : _userNameController.text,
       "categories": selectedCategoryIds
     });
 
@@ -72,7 +76,7 @@ class _AddClinicPageState extends State<AddClinicPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Clinic'),
+        title: const Text('Add Clinic'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -81,27 +85,32 @@ class _AddClinicPageState extends State<AddClinicPage> {
           children: <Widget>[
             TextField(
               controller: _titleController,
-              decoration: InputDecoration(labelText: 'Title'),
+              decoration: const InputDecoration(labelText: 'Title'),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             TextField(
               controller: _descriptionController,
-              decoration: InputDecoration(labelText: 'Description'),
+              decoration: const InputDecoration(labelText: 'Description'),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             TextField(
               controller: _addressController,
-              decoration: InputDecoration(labelText: 'Address'),
+              decoration: const InputDecoration(labelText: 'Address'),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             TextField(
               controller: _webAddressController,
-              decoration: InputDecoration(labelText: 'Web Address'),
+              decoration: const InputDecoration(labelText: 'Web Address'),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
+            TextField(
+              controller: _userNameController,
+              decoration: const InputDecoration(labelText: 'Username for the clinic'),
+            ),
+            const SizedBox(height: 12),
             DropdownButtonFormField<Category>(
               isExpanded: true,
-              hint: Text('Select Categories'),
+              hint: const Text('Select Categories'),
               value: null,
               items: categories.map((Category category) {
                 return DropdownMenuItem<Category>(
@@ -120,12 +129,12 @@ class _AddClinicPageState extends State<AddClinicPage> {
                 }
               },
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 filled: true,
                 fillColor: Colors.grey.shade200,
               ),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             Wrap(
               spacing: 8.0,
               runSpacing: 8.0,
@@ -145,13 +154,13 @@ class _AddClinicPageState extends State<AddClinicPage> {
               onPressed: () {
                 _login();
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Clinic Added Successfully!')),
+                  const SnackBar(content: Text('Clinic Added Successfully!')),
                 );
-                Future.delayed(Duration(seconds: 1), () {
+                Future.delayed(const Duration(seconds: 1), () {
                   Navigator.of(context).pushReplacementNamed('/admin');
                 });
               },
-              child: Text('Add Clinic'),
+              child: const Text('Add Clinic'),
             ),
           ],
         ),
@@ -165,7 +174,7 @@ void _showSuccessDialog(BuildContext context) {
     context: context,
     barrierDismissible: false, // Kullanıcının popup'ı kapatmasını engelle
     builder: (BuildContext context) {
-      return AlertDialog(
+      return const AlertDialog(
         title: Text('Success'),
         content: Text('Item successfully deleted!'),
       );
@@ -173,7 +182,7 @@ void _showSuccessDialog(BuildContext context) {
   );
 
   // 2 saniye sonra yönlendirme yap
-  Future.delayed(Duration(seconds: 2), () {
+  Future.delayed(const Duration(seconds: 2), () {
     Navigator.of(context).pop(); // Başarı dialogunu kapat
     Navigator.pushNamed(context, '/AdminPage'); //  Yeni sayfaya yönlendir
   });

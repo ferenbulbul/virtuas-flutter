@@ -11,7 +11,7 @@ import 'package:flutter_application_1/models/user.dart';
 import 'package:http/http.dart' as http;
 
 class DataService {
-  final String categoryGetUrl = 'https://localhost:7128/api/Category/Get';
+  final String categoryGetUrl = 'http://10.0.2.2:5241/api/Category/Get';
 
   Future<List<Category>> fetchCategories() async {
     List<Category> data = [];
@@ -32,7 +32,7 @@ class DataService {
 
   Future<List<Category>> fetchSelectedCategories(int categoryId) async {
     final response = await http.post(Uri.parse(
-        'https://localhost:7128/api/Category/GetByClinicId?clinicId=$categoryId'));
+        'http://10.0.2.2:5241/api/Category/GetByClinicId?clinicId=$categoryId'));
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
@@ -46,7 +46,7 @@ class DataService {
 Future<List<Question>> fetchQuestionsByCategoryId(int categoryId) async {
   List<Question> data = [];
   final String categoryGetUrl =
-      'https://localhost:7128/api/Question/GetByCategoryId?categoryId=$categoryId';
+      'http://10.0.2.2:5241/api/Question/GetByCategoryId?categoryId=$categoryId';
 
   try {
     final response = await http.get(Uri.parse(categoryGetUrl));
@@ -63,7 +63,7 @@ Future<List<Question>> fetchQuestionsByCategoryId(int categoryId) async {
 }
 
 Future<void> editClinic(Clinic clinic) async {
-  String apiUrl = 'https://localhost:7128/api/Clinics/Update';
+  String apiUrl = 'http://10.0.2.2:5241/api/Clinics/Update';
 
   var postData = jsonEncode(({
     'id': clinic.id,
@@ -90,7 +90,7 @@ Future<void> editClinic(Clinic clinic) async {
 
 Future<List<Clinic>> fetchClinics() async {
   final response =
-      await http.get(Uri.parse('https://localhost:7128/api/Clinics/Get'));
+      await http.get(Uri.parse('http://10.0.2.2:5241/api/Clinics/Get'));
 
   if (response.statusCode == 200) {
     List jsonResponse = json.decode(response.body);
@@ -102,7 +102,7 @@ Future<List<Clinic>> fetchClinics() async {
 
 Future<void> deleteClinic(int clinicId) async {
   final response = await http.delete(
-      Uri.parse('https://localhost:7128/api/Clinics/Delete?id=$clinicId'));
+      Uri.parse('http://10.0.2.2:5241/api/Clinics/Delete?id=$clinicId'));
   if (response.statusCode == 200) {
   } else {
     throw Exception('Failed to load clinics');
@@ -111,7 +111,7 @@ Future<void> deleteClinic(int clinicId) async {
 
 Future<void> addCreditToclinic(int id, int newCredit) async {
   final response = await http.put(Uri.parse(
-      'https://localhost:7128/api/Clinics/AddCreditToClinic?clinicId=$id&newCredit=$newCredit'));
+      'http://10.0.2.2:5241/api/Clinics/AddCreditToClinic?clinicId=$id&newCredit=$newCredit'));
   if (response.statusCode == 200) {
   } else {
     throw Exception('Failed to load clinics');
@@ -120,7 +120,7 @@ Future<void> addCreditToclinic(int id, int newCredit) async {
 
 Future<ApplicationDetailsResponse> fetchApplications(int userId) async {
   final response = await http.get(Uri.parse(
-      'https://localhost:7128/api/Application/GetApplicationsWithAnswers?userId=$userId'));
+      'http://10.0.2.2:5241/api/Application/GetApplicationsWithAnswers?userId=$userId'));
 
   if (response.statusCode == 200) {
     return ApplicationDetailsResponse.fromJson(jsonDecode(response.body));
@@ -129,11 +129,11 @@ Future<ApplicationDetailsResponse> fetchApplications(int userId) async {
   }
 }
 
-final String updateUserUrl = 'https://localhost:7128/api/User/Update';
+const String updateUserUrl = 'http://10.0.2.2:5241/api/User/Update';
 
 Future<User> fetchUser(int userId) async {
   final response = await http.post(
-    Uri.parse('https://localhost:7128/api/User/Profile?userId=$userId'),
+    Uri.parse('http://10.0.2.2:5241/api/User/Profile?userId=$userId'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -166,7 +166,7 @@ Future<User> updateUser(User user) async {
 Future<PossibleClientPreDataResponse> fetchApplicationsPreData(
     int clinicId) async {
   final response = await http.get(Uri.parse(
-      'https://localhost:7128/api/Application/GetApplicationsPreData?clinicId=$clinicId'));
+      'http://10.0.2.2:5241/api/Application/GetApplicationsPreData?clinicId=$clinicId'));
 
   if (response.statusCode == 200) {
     return PossibleClientPreDataResponse.fromJson(jsonDecode(response.body));
@@ -177,7 +177,7 @@ Future<PossibleClientPreDataResponse> fetchApplicationsPreData(
 
 Future<void> createCategory(AddCategory addCategory) async {
   // Örnek API URL
-  String apiUrl = 'https://localhost:7128/api/Category/Add';
+  String apiUrl = 'http://10.0.2.2:5241/api/Category/Add';
 
   try {
     // Kategori bilgilerini ve soruları JSON formatına çevir

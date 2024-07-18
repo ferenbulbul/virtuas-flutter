@@ -5,6 +5,8 @@ import 'package:flutter_application_1/services/dataService.dart';
 import 'package:flutter_application_1/utils/privacy.dart';
 
 class PossibleClientPreDataScreen extends StatefulWidget {
+  const PossibleClientPreDataScreen({super.key});
+
   @override
   _PossibleClientPreDataScreenState createState() =>
       _PossibleClientPreDataScreenState();
@@ -24,13 +26,13 @@ class _PossibleClientPreDataScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Possible Client PreData'),
+        title: const Text('Possible Client PreData'),
       ),
       body: FutureBuilder<PossibleClientPreDataResponse>(
         future: futureData,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (snapshot.hasData) {
@@ -41,9 +43,9 @@ class _PossibleClientPreDataScreenState
                 return ExpansionTile(
                   title: Text(
                       '${PrivacyUtils.maskName(item.userName)} ${PrivacyUtils.maskName(item.userSurname)}'),
-                  subtitle: Text('${item.categoryTitle}'),
+                  subtitle: Text(item.categoryTitle),
                   trailing: ElevatedButton(
-                    child: Text('teklif Ver'),
+                    child: const Text('teklif Ver'),
                     onPressed: () => {
                       Navigator.push(
                         context,
@@ -67,7 +69,7 @@ class _PossibleClientPreDataScreenState
               },
             );
           } else {
-            return Center(child: Text('No data found'));
+            return const Center(child: Text('No data found'));
           }
         },
       ),

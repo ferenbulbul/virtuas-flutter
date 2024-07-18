@@ -7,6 +7,8 @@ import 'package:flutter_application_1/services/dataService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ClientLandingPage extends StatefulWidget {
+  const ClientLandingPage({super.key});
+
   @override
   _ClientLandingPageState createState() => _ClientLandingPageState();
 }
@@ -47,7 +49,7 @@ class _ClientLandingPageState extends State<ClientLandingPage> {
 
   Widget _buildProfilePage() {
     if (userId == null) {
-      return Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator());
     }
     return ProfilePage(userId: userId!);
   }
@@ -58,7 +60,7 @@ class _ClientLandingPageState extends State<ClientLandingPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           DropdownButton<Category>(
-            hint: Text('Select a category'),
+            hint: const Text('Select a category'),
             value: null,
             onChanged: (Category? newValue) {
               if (newValue != null) {
@@ -78,19 +80,19 @@ class _ClientLandingPageState extends State<ClientLandingPage> {
               );
             }).toList(),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
         ],
       ),
     );
   }
 
   Widget _buildApplicationsPage() {
-    return ApplicationsPage();
+    return const ApplicationsPage();
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> _widgetOptions = <Widget>[
+    List<Widget> widgetOptions = <Widget>[
       _buildProfilePage(),
       _buildDiscoverPage(),
       _buildApplicationsPage(),
@@ -98,7 +100,7 @@ class _ClientLandingPageState extends State<ClientLandingPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Client Landing Page'),
+        title: const Text('Client Landing Page'),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -119,7 +121,7 @@ class _ClientLandingPageState extends State<ClientLandingPage> {
         selectedItemColor: Colors.blue,
         onTap: _onItemTapped,
       ),
-      body: _widgetOptions.elementAt(_selectedIndex),
+      body: widgetOptions.elementAt(_selectedIndex),
     );
   }
 }
