@@ -3,7 +3,8 @@ import 'package:flutter_application_1/models/answer.dart';
 import 'package:flutter_application_1/models/category.dart';
 import 'package:flutter_application_1/models/question.dart';
 import 'package:flutter_application_1/pages/client/summary.dart';
-import 'package:flutter_application_1/services/dataService.dart';
+import 'package:flutter_application_1/services/categoryService.dart';
+import 'package:flutter_application_1/services/dataService.dart'; // Assuming DataService contains deleteQuestionById
 import 'package:flutter_application_1/models/summary.dart'; // Import your model
 
 class CategoryDetailPage extends StatefulWidget {
@@ -41,6 +42,24 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
     }
   }
 
+  void deleteQuestion(int questionId) async {
+    try {
+      await CategoryService().deleteCategory(
+          questionId); // Example usage, adjust as per your actual implementation
+      setState(() {
+        questions.removeWhere((question) => question.id == questionId);
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Question deleted successfully')),
+      );
+    } catch (e) {
+      print('Error deleting question: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to delete question')),
+      );
+    }
+  }
+
   void saveAndNavigateToSummaryPage() {
     SummaryData summaryData = SummaryData(
         category: widget.category!,
@@ -73,28 +92,66 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
                 itemCount: questions.length,
                 itemBuilder: (context, index) {
                   Question question = questions[index];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          question.title,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: 8),
-                        TextField(
-                          decoration: InputDecoration(
-                            hintText: 'Enter your answer here',
-                            border: OutlineInputBorder(),
+                  return Dismissible(
+                    key: Key(question.id.toString()),
+                    onDismissed: (direction) {
+                      deleteQuestion(question.id);
+                    },
+                    confirmDismiss: (direction) async {
+                      return await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Delete Question'),
+                            content: Text(
+                                'Are you sure you want to delete this question?'),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text('Cancel'),
+                                onPressed: () {
+                                  Navigator.of(context).pop(false);
+                                },
+                              ),
+                              TextButton(
+                                child: Text('Delete'),
+                                onPressed: () {
+                                  Navigator.of(context).pop(true);
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    background: Container(
+                      color: Colors.red,
+                      child: Icon(Icons.delete, color: Colors.white),
+                      alignment: Alignment.centerRight,
+                      padding: EdgeInsets.only(right: 20.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            question.title,
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          onChanged: (value) {
-                            setState(() {
-                              answers[question.id] = value;
-                            });
-                          },
-                        ),
-                      ],
+                          SizedBox(height: 8),
+                          TextField(
+                            decoration: InputDecoration(
+                              hintText: 'Enter your answer here',
+                              border: OutlineInputBorder(),
+                            ),
+                            onChanged: (value) {
+                              setState(() {
+                                answers[question.id] = value;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },

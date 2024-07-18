@@ -45,9 +45,9 @@ class CategoryService {
   }
 
   Future<void> deleteCategory(int categoryId) async {
-    String apiUrl = 'https://api.example.com/categories/$categoryId';
+    String apiUrl = 'https://localhost:7128/api/Category/Delete?id=$categoryId';
 
-    var response = await http.delete(Uri.parse(apiUrl));
+    var response = await http.post(Uri.parse(apiUrl));
 
     if (response.statusCode == 200) {
       print('Category deleted successfully!');

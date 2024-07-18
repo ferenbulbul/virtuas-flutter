@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter_application_1/pages/admin/admin_landing.dart';
+import 'package:flutter_application_1/pages/category/add_category.dart';
 import 'package:flutter_application_1/pages/client/client_landing.dart';
 import 'package:flutter_application_1/pages/client/register.dart';
 import 'package:flutter_application_1/pages/clinic/clinic_landing.dart';

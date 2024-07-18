@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/applications_detail.dart';
 import 'package:flutter_application_1/pages/client/application_detail.dart';
 import 'package:flutter_application_1/services/dataService.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ApplicationsPage extends StatefulWidget {
   @override
@@ -9,12 +10,25 @@ class ApplicationsPage extends StatefulWidget {
 }
 
 class _ApplicationsPageState extends State<ApplicationsPage> {
-  late Future<ApplicationDetailsResponse> futureApplications;
+  Future<ApplicationDetailsResponse>? futureApplications;
 
+  int? userId;
   @override
   void initState() {
     super.initState();
-    futureApplications = fetchApplications(3);
+    _loadUserId();
+  }
+
+  void _loadUserId() async {
+    // Burada userId'i yükle
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userId = prefs.getInt('userId') ??
+        0; // Örneğin, userId yükleme işlemi async olarak gerçekleştiriliyor
+
+    // userId yüklendikten sonra setState ile futureApplications'ı güncelle
+    setState(() {
+      futureApplications = fetchApplications(userId!);
+    });
   }
 
   @override

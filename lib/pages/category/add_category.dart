@@ -189,7 +189,7 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
   }
 
   void _navigateToHomePage() {
-    Navigator.of(context).pushReplacementNamed('/clientlandingpage');
+    Navigator.of(context).pushReplacementNamed('/admin');
   }
 }
 
