@@ -40,7 +40,7 @@ class _LoginFormState extends State<LoginForm> {
     var jsonData;
     String apiUrl = 'http://10.0.2.2:5241/api/Auth/Login';    
     
-    var postData = jsonEncode({'email': username, 'password': password});
+    var postData = jsonEncode({'username': username, 'password': password});
     // POST isteği yapılıyor
     var response = await http.post(
 

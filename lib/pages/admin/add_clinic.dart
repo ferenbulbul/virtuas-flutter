@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/category.dart';
+import 'package:flutter_application_1/pages/admin/clinic_first_save.dart';
 import 'package:flutter_application_1/services/dataService.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:convert';
@@ -20,8 +21,8 @@ class _AddClinicPageState extends State<AddClinicPage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
-  final TextEditingController _webAddressController = TextEditingController();
-  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _webAddressController = TextEditingController();  
+  final TextEditingController _emailController = TextEditingController();
 
   @override
   void initState() {
@@ -38,15 +39,15 @@ class _AddClinicPageState extends State<AddClinicPage> {
 
   List<Category> myCategories = [];
 
-  Future<void> _login() async {
+  Future<void> _addClinic() async {
     String clinicAddUrl = 'http://10.0.2.2:5241/api/clinics/add';
-
+    var jsonData;
     var postData = jsonEncode({
       'title': _titleController.text,
       'description': _descriptionController.text,
       "address": _addressController.text,
-      "webaddress": _webAddressController.text,
-      "userName" : _userNameController.text,
+      "webaddress": _webAddressController.text,      
+      "email" : _emailController.text,
       "categories": selectedCategoryIds
     });
 
@@ -59,17 +60,21 @@ class _AddClinicPageState extends State<AddClinicPage> {
       body: postData,
     );
 
-    // if (response.statusCode == 200) {
-    //   _showSuccessDialog(context);
-    // } else {
+     if (response.statusCode == 200) {      
+      jsonData = jsonDecode(response.body);
+      String username = jsonData["username"];
+      String password = jsonData["password"];
+      Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => ClinicUserInfoPage(username: username, password: password,)),
+            );
+
+
+
+    } else {
     //   // Hata durumunda hata mesajını yazdırıyoruz
-    //   print('Failed to make POST request.');
-    // }
-
-    // POST isteği yapılıyor
-
-    // Başarılı giriş durumunda bir sonraki sayfaya yönlendirme (Navigator)
-    // Navigator.push(context, MaterialPageRoute(builder: (context) => NextPage()));
+       print('Failed to make POST request.');
+     }    
   }
 
   @override
@@ -102,10 +107,10 @@ class _AddClinicPageState extends State<AddClinicPage> {
               controller: _webAddressController,
               decoration: const InputDecoration(labelText: 'Web Address'),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 12),            
             TextField(
-              controller: _userNameController,
-              decoration: const InputDecoration(labelText: 'Username for the clinic'),
+              controller: _emailController,
+              decoration: const InputDecoration(labelText: 'Email for the clinic contact'),
             ),
             const SizedBox(height: 12),
             DropdownButtonFormField<Category>(
@@ -152,13 +157,7 @@ class _AddClinicPageState extends State<AddClinicPage> {
             ),
             ElevatedButton(
               onPressed: () {
-                _login();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Clinic Added Successfully!')),
-                );
-                Future.delayed(const Duration(seconds: 1), () {
-                  Navigator.of(context).pushReplacementNamed('/admin');
-                });
+                _addClinic();               
               },
               child: const Text('Add Clinic'),
             ),

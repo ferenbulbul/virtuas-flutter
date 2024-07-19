@@ -33,6 +33,7 @@ dependencies:
   http: ^1.2.0
   fluttertoast: ^8.0.7
   intl_phone_number_input: ^0.7.0
+  clipboard: ^0.1.3
 
 
 
