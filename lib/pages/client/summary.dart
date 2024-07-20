@@ -43,7 +43,7 @@ class _SummaryPageState extends State<SummaryPage> {
     List<Map<String, dynamic>> list =
         getAnswer.map((answer) => answer.toJson()).toList();
     String apiUrl =
-        'https://localhost:7128/api/Application/Add?userId=$userId&categoryId=$categoryId';
+        'http://10.0.2.2:5241/api/Application/Add?userId=$userId&categoryId=$categoryId';
 
     var postData = jsonEncode(list);
     //POST isteği yapılıyor

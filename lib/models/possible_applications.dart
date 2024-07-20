@@ -29,6 +29,7 @@ class PossibleClientPreData {
   final String userName;
   final String userSurname;
   final List<AnswerAndQuestion> answers;
+  final int cost;
 
   PossibleClientPreData({
     required this.applicationId,
@@ -37,6 +38,7 @@ class PossibleClientPreData {
     required this.userName,
     required this.userSurname,
     required this.answers,
+    required this.cost
   });
 
   // Factory method to create an instance from JSON
@@ -47,6 +49,7 @@ class PossibleClientPreData {
       categoryTitle: json['categoryTitle'],
       userName: json['userName'],
       userSurname: json['userSurname'],
+      cost: json['cost'],
       answers: List<AnswerAndQuestion>.from(
         json['answers'].map((item) => AnswerAndQuestion.fromJson(item)),
       ),
@@ -61,6 +64,7 @@ class PossibleClientPreData {
       'categoryTitle': categoryTitle,
       'userName': userName,
       'userSurname': userSurname,
+      'cost' : cost,
       'answers': answers.map((item) => item.toJson()).toList(),
     };
   }

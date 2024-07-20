@@ -38,9 +38,9 @@ class MyApp extends StatelessWidget {
         '/register': (context) => const RegistrationPage(),
         '/login': (context) => const LoginPage(),
         '/clientlandingpage': (context) => const ClientLandingPage(),
-        '/cliniclandingpage': (context) => const ClinicLandingPage(),
-
-        // Diğer rotaları buraya ekleyebilirsiniz
+        '/clinicLandingPage': (context) {
+          return const ClinicLandingPage();
+        },
       },
     );
   }

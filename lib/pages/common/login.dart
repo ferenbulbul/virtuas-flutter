@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/const/roles.dart';
 import 'package:flutter_application_1/pages/admin/admin_landing.dart';
+import 'package:flutter_application_1/pages/client/client_landing.dart';
+import 'package:flutter_application_1/pages/clinic/clinic_landing.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:io';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -38,13 +39,11 @@ class _LoginFormState extends State<LoginForm> {
     String username = _usernameController.text;
     String password = _passwordController.text;
     var jsonData;
-    String apiUrl = 'http://10.0.2.2:5241/api/Auth/Login';    
-    
+    String apiUrl = 'http://10.0.2.2:5241/api/Auth/Login';
+
     var postData = jsonEncode({'username': username, 'password': password});
     // POST isteği yapılıyor
     var response = await http.post(
-
-
       Uri.parse(apiUrl),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -58,9 +57,10 @@ class _LoginFormState extends State<LoginForm> {
       var role = jsonData["role"];
       var username = jsonData["username"];
       var id = jsonData["id"];
+      var clinicId = jsonData["clinicId"];
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setInt('userId', id); // Kullanıcı ID'sini depoluyoruz
+      
 
       if (role == Roles.Admin) {
         Navigator.push(
@@ -69,10 +69,18 @@ class _LoginFormState extends State<LoginForm> {
         );
       }
       if (role == Roles.Client) {
-        Navigator.of(context).pushReplacementNamed('/clientlandingpage');
+        await prefs.setInt('userId', id);
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => ClientLandingPage()),
+          (Route<dynamic> route) => false,
+        );
       }
       if (role == Roles.Clinic) {
-        Navigator.of(context).pushReplacementNamed('/cliniclandingpage');
+        await prefs.setInt('clinicId', clinicId);
+        Navigator.pushReplacementNamed(context, '/clinicLandingPage', arguments: {
+              'clinicId': clinicId,
+            });        
       }
     } else {
       // Hata durumunda hata mesajını yazdırıyoruz

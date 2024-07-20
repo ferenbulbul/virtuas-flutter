@@ -5,7 +5,8 @@ import 'package:flutter_application_1/services/dataService.dart';
 import 'package:flutter_application_1/utils/privacy.dart';
 
 class PossibleClientPreDataScreen extends StatefulWidget {
-  const PossibleClientPreDataScreen({super.key});
+  final int clinicId;  
+  const PossibleClientPreDataScreen({super.key,required this.clinicId});
 
   @override
   _PossibleClientPreDataScreenState createState() =>
@@ -19,15 +20,22 @@ class _PossibleClientPreDataScreenState
   @override
   void initState() {
     super.initState();
-    futureData = fetchApplicationsPreData(36);
+    futureData = fetchApplicationsPreData(widget.clinicId);
+  }
+  @override
+  void didpop() {
+    super.initState();
+    futureData = fetchApplicationsPreData(widget.clinicId);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Possible Client PreData'),
+        title: const Text('Muhtemel Müşteriler'),
+        automaticallyImplyLeading: false, // Remove back arrow
       ),
+      
       body: FutureBuilder<PossibleClientPreDataResponse>(
         future: futureData,
         builder: (context, snapshot) {
@@ -43,15 +51,15 @@ class _PossibleClientPreDataScreenState
                 return ExpansionTile(
                   title: Text(
                       '${PrivacyUtils.maskName(item.userName)} ${PrivacyUtils.maskName(item.userSurname)}'),
-                  subtitle: Text(item.categoryTitle),
+                  subtitle: Text(item.categoryTitle),                  
                   trailing: ElevatedButton(
-                    child: const Text('teklif Ver'),
+                    child: Text("Teklif ver: ${item.cost} Token"),
                     onPressed: () => {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => PossibleClientPreDataDetailPage(
-                            preData: item,
+                            preData: item,                            
                           ),
                         ),
                       )
@@ -62,8 +70,7 @@ class _PossibleClientPreDataScreenState
                       title: Text('Q: ${answer.question}'),
                       subtitle: Text('A: ${answer.answer}'),
                     );
-                  }).toList(),
-
+                  }).toList(),                  
                   // todo:date gelsinn
                 );
               },

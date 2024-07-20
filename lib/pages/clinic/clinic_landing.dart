@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/clinic/possible_customers.dart';
+import 'package:flutter_application_1/pages/clinic/sent_offers.dart'; // Import your actual screens
 
 class ClinicLandingPage extends StatefulWidget {
-  const ClinicLandingPage({super.key});
+  
+
+  const ClinicLandingPage({Key? key,}) : super(key: key);
 
   @override
   _ClinicLandingPageState createState() => _ClinicLandingPageState();
@@ -21,6 +24,12 @@ class _ClinicLandingPageState extends State<ClinicLandingPage>
 
   @override
   Widget build(BuildContext context) {
+    // Extract arguments passed from Navigator
+    final Map<String, dynamic> args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+
+    // Retrieve clinicId from arguments
+    final int clinicId = args['clinicId'];
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Clinic Landing Page'),
@@ -92,12 +101,11 @@ class _ClinicLandingPageState extends State<ClinicLandingPage>
       ),
       body: TabBarView(
         controller: _tabController,
-        children: const [
-          PossibleClientPreDataScreen(),
-          // Replace the following with your actual pages
-          Center(child: Text('Services Page')),
-          Center(child: Text('Sent Offers Page')),
-          Center(child: Text('Clinic Info Page')),
+        children: [
+          PossibleClientPreDataScreen(clinicId: clinicId), // Replace with your actual screen/widget
+          Center(child: Text('Services Page')), // Replace with your actual screen/widget
+          SentOffersPage(clinicId: clinicId), // Replace with your actual screen/widget
+          Center(child: Text('Clinic Info Page')), // Replace with your actual screen/widget
         ],
       ),
     );

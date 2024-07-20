@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter_application_1/models/add_category.dart';
 import 'package:flutter_application_1/models/applications_detail.dart';
 import 'package:flutter_application_1/models/category.dart';
+import 'package:flutter_application_1/models/client_data_response.dart';
 import 'package:flutter_application_1/models/clinic.dart';
 import 'package:flutter_application_1/models/possible_applications.dart';
 import 'package:flutter_application_1/models/question.dart';
@@ -209,5 +210,78 @@ Future<void> createCategory(AddCategory addCategory) async {
   } catch (e) {
     // Hata durumunda hata mesajı yazdır
     print('Exception occurred: $e');
+  }
+}
+
+Future<int?> getClinicCredit(
+    int? clinicId) async {
+  final response = await http.get(Uri.parse(
+      'http://10.0.2.2:5241/api/Clinics/GetCredit?clinicId=$clinicId'));
+
+  if (response.statusCode == 200) {
+    return int.parse(response.body);
+  } else {
+    throw Exception('Failed to load applications');
+  }
+}
+Future<int?> giveOffer(int? clinicId, int applicationId, int price) async {
+   String apiUrl = 'http://10.0.2.2:5241/api/offer/make';
+  try {
+    
+ var postData = jsonEncode(({
+    'clinicId': clinicId,
+    'applicationId': applicationId,
+    'price' : price   
+  }));
+
+  // POST isteği yapılıyor
+  var response = await http.post(
+    Uri.parse(apiUrl),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: postData,
+  );
+  if (response.statusCode >= 200 && response.statusCode < 300) {
+      
+    } else {
+      // API call failed
+      print('Failed to make API call. Status Code: ${response.statusCode}');
+      // Example: Show error message      
+    }
+
+  } catch (e) {
+    print('Exception occurred: $e');
+    // Example: Show error message
+    showErrorMessage('Exception occurred: $e');
+  }
+
+}
+void showSuccessMessage() {
+  // Show a success message to the user (e.g., using SnackBar)
+  // Example:
+  // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //   content: Text('Offer successfully submitted.'),
+  //   duration: Duration(seconds: 2),
+  // ));
+}
+void showErrorMessage(String message) {
+  // Show an error message to the user (e.g., using SnackBar)
+  // Example:
+  // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //   content: Text('Error: $message'),
+  //   duration: Duration(seconds: 2),
+  // ));
+}
+
+Future<ClientDataResponse> fetchMadeOffers(int clinicId) async {
+  final response = await http.get(Uri.parse(
+      'http://10.0.2.2:5241/api/Offer/GetMade?clinicId=$clinicId'));
+
+  if (response.statusCode == 200) {
+    var x = ClientDataResponse.fromJson(jsonDecode(response.body)); 
+    return x;
+  } else {
+    throw Exception('Failed to load applications');
   }
 }
