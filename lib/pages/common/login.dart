@@ -1,14 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/const/roles.dart';
-import 'package:flutter_application_1/pages/admin/admin_landing.dart';
-import 'package:flutter_application_1/pages/client/client_landing.dart';
-import 'package:flutter_application_1/pages/clinic/clinic_landing.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +22,7 @@ class LoginPage extends StatelessWidget {
 }
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+  const LoginForm({Key? key}) : super(key: key);
 
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -34,61 +31,54 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final storage = FlutterSecureStorage();
 
   Future<void> _login() async {
     String username = _usernameController.text;
     String password = _passwordController.text;
-    var jsonData;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
     String apiUrl = 'http://10.0.2.2:5241/api/Auth/Login';
-
     var postData = jsonEncode({'username': username, 'password': password});
-    // POST isteği yapılıyor
-    var response = await http.post(
-      Uri.parse(apiUrl),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: postData,
-    );
 
-    if (response.statusCode == 200) {
-      // Başarılı cevap durumunda JSON verisini alıyoruz
-      jsonData = jsonDecode(response.body);
-      var role = jsonData["role"];
-      var username = jsonData["username"];
-      var id = jsonData["id"];
-      var clinicId = jsonData["clinicId"];
+    try {
+      var response = await http.post(
+        Uri.parse(apiUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: postData,
+      );
 
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      
-
-      if (role == Roles.Admin) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => AdminPage(text: username)),
-        );
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body);        
+        var role = jsonData["role"];
+        var clinicId = jsonData["clinicId"];
+        var userId = jsonData["id"];
+     
+        if (role == 'admin') {
+           await storage.write(key: 'loggedInAs', value: "admin");
+          Navigator.pushReplacementNamed(context, '/admin');          
+        } 
+        else if (role == 'client') {
+          await storage.write(key: 'loggedInAs', value: "client");
+          await prefs.setInt("userId", userId);      
+          Navigator.pushReplacementNamed(context, '/clientLandingPage');
+        } 
+        else if (role == 'clinic') {
+           await storage.write(key: 'loggedInAs', value: "clinic");
+           await prefs.setInt("clinicId", clinicId);      
+          Navigator.pushReplacementNamed(context, '/clinicLandingPage', arguments: {
+            'clinicId': clinicId,
+          });
+        }
+        
+      } else {
+        print('Failed to login: ${response.statusCode}');
       }
-      if (role == Roles.Client) {
-        await prefs.setInt('userId', id);
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => ClientLandingPage()),
-          (Route<dynamic> route) => false,
-        );
-      }
-      if (role == Roles.Clinic) {
-        await prefs.setInt('clinicId', clinicId);
-        Navigator.pushReplacementNamed(context, '/clinicLandingPage', arguments: {
-              'clinicId': clinicId,
-            });        
-      }
-    } else {
-      // Hata durumunda hata mesajını yazdırıyoruz
-      print('Failed to make POST request.');
+    } catch (e) {
+      print('Exception during login: $e');
     }
-
-    // Başarılı giriş durumunda bir sonraki sayfaya yönlendirme (Navigator)
-    // Navigator.push(context, MaterialPageRoute(builder: (context) => NextPage()));
   }
 
   @override

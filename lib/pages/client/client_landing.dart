@@ -101,6 +101,13 @@ class _ClientLandingPageState extends State<ClientLandingPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Client Landing Page'),
+        leading: IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: 
+              // Define the action when the button is pressed
+              logout
+            
+          ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[

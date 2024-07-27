@@ -5,8 +5,8 @@ import 'package:flutter_application_1/services/dataService.dart';
 import 'package:flutter_application_1/utils/privacy.dart';
 
 class PossibleClientPreDataScreen extends StatefulWidget {
-  final int clinicId;  
-  const PossibleClientPreDataScreen({super.key,required this.clinicId});
+  
+  const PossibleClientPreDataScreen({super.key});
 
   @override
   _PossibleClientPreDataScreenState createState() =>
@@ -14,18 +14,16 @@ class PossibleClientPreDataScreen extends StatefulWidget {
 }
 
 class _PossibleClientPreDataScreenState
-    extends State<PossibleClientPreDataScreen> {
+    extends State<PossibleClientPreDataScreen> with RouteAware {
   late Future<PossibleClientPreDataResponse> futureData;
+  
 
   @override
   void initState() {
-    super.initState();
-    futureData = fetchApplicationsPreData(widget.clinicId);
-  }
-  @override
-  void didpop() {
-    super.initState();
-    futureData = fetchApplicationsPreData(widget.clinicId);
+    super.initState();      
+    setState(() {
+    futureData = fetchApplicationsPreData();  
+    });      
   }
 
   @override

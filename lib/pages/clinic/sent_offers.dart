@@ -4,11 +4,11 @@ import 'package:flutter_application_1/models/client_data_response.dart';
 import 'package:flutter_application_1/services/dataService.dart';
 
 class SentOffersPage extends StatefulWidget {
-  final int clinicId;
+  
 
-  SentOffersPage({Key? key, required this.clinicId}) : super(key: key);
+  const SentOffersPage({Key? key}) : super(key: key);
 
-  @override
+  @override  
   _SentOffersPageState createState() => _SentOffersPageState();
 }
 
@@ -18,7 +18,7 @@ class _SentOffersPageState extends State<SentOffersPage> {
   @override
   void initState() {
     super.initState();
-    _clientDataResponseFuture = fetchMadeOffers(widget.clinicId);
+    _clientDataResponseFuture = fetchMadeOffers();
   }
 
   @override
@@ -43,7 +43,9 @@ class _SentOffersPageState extends State<SentOffersPage> {
               itemBuilder: (context, index) {
                 ClientData clientData = snapshot.data!.clientDataList![index];
                 return ExpansionTile(
+                  
                   title: Text('Application ID: ${clientData.applicationId}'),
+                  tilePadding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 16.0),
                   subtitle: Text('User: ${clientData.userName} ${clientData.userSurname}'),
                   children: [
                     ListTile(

@@ -5,6 +5,7 @@ import 'package:flutter_application_1/pages/client/client_landing.dart';
 import 'package:flutter_application_1/pages/client/register.dart';
 import 'package:flutter_application_1/pages/clinic/clinic_landing.dart';
 import 'package:flutter_application_1/pages/common/login.dart';
+import 'package:flutter_application_1/pages/common/welcome.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -30,14 +31,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoginPage(), // Başlangıç sayfası
+      home: WelcomePage(),
       routes: {
         '/admin': (context) => const AdminPage(
               text: "",
             ),
         '/register': (context) => const RegistrationPage(),
         '/login': (context) => const LoginPage(),
-        '/clientlandingpage': (context) => const ClientLandingPage(),
+        '/clientLandingPage': (context) => const ClientLandingPage(),
         '/clinicLandingPage': (context) {
           return const ClinicLandingPage();
         },

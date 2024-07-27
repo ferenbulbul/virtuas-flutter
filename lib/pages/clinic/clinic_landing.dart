@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/pages/clinic/clinic_info.dart';
+import 'package:flutter_application_1/pages/clinic/clinic_services.dart';
 import 'package:flutter_application_1/pages/clinic/possible_customers.dart';
-import 'package:flutter_application_1/pages/clinic/sent_offers.dart'; // Import your actual screens
+import 'package:flutter_application_1/pages/clinic/sent_offers.dart';
+import 'package:flutter_application_1/services/dataService.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Import your actual screens
 
 class ClinicLandingPage extends StatefulWidget {
   
@@ -14,22 +19,20 @@ class ClinicLandingPage extends StatefulWidget {
 class _ClinicLandingPageState extends State<ClinicLandingPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
-    _tabController.index = 0; // Default to the Possible Customers tab
+    _tabController.index = 0; // Default to the Possible Customers tab   
   }
+ 
+
 
   @override
   Widget build(BuildContext context) {
-    // Extract arguments passed from Navigator
-    final Map<String, dynamic> args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-
-    // Retrieve clinicId from arguments
-    final int clinicId = args['clinicId'];
-
+  
     return Scaffold(
       appBar: AppBar(
         title: const Text('Clinic Landing Page'),
@@ -96,16 +99,30 @@ class _ClinicLandingPageState extends State<ClinicLandingPage>
                 Navigator.of(context).pop(); // Close the drawer
               },
             ),
+            Divider(), // Optional: Add a divider before logout button
+            ListTile(
+              leading: const Icon(Icons.exit_to_app),
+              title: const Text('Logout'),
+              onTap: () {
+
+                logout;
+                // Implement logout logic here
+                Navigator.of(context).pop(); // Close the drawer
+                // Example: Navigate to login page
+
+                Navigator.pushReplacementNamed(context, '/login');
+              },
+            ),
           ],
         ),
       ),
       body: TabBarView(
         controller: _tabController,
         children: [
-          PossibleClientPreDataScreen(clinicId: clinicId), // Replace with your actual screen/widget
-          Center(child: Text('Services Page')), // Replace with your actual screen/widget
-          SentOffersPage(clinicId: clinicId), // Replace with your actual screen/widget
-          Center(child: Text('Clinic Info Page')), // Replace with your actual screen/widget
+          const PossibleClientPreDataScreen(), 
+          ClinicServicesPage(),
+          SentOffersPage(), 
+          ClinicInfoPage()
         ],
       ),
     );

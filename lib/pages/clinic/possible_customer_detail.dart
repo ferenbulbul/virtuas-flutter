@@ -26,6 +26,7 @@ class _PossibleClientPreDataDetailPageState extends State<PossibleClientPreDataD
   }
 
   Future<void> _loadClinicInfo() async {
+    
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       clinicId = prefs.getInt('clinicId') ?? 0;

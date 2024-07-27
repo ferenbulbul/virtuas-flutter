@@ -51,7 +51,7 @@ class _ClinicDetailPageState extends State<ClinicDetailPage> {
 
   void getSelectedClinics() async {
     List<Category> fetchedData =
-        await _dataService.fetchSelectedCategories(widget.clinic.id);
+        await _dataService.fetchSelectedCategories();
     setState(() {
       selectedCategoires = fetchedData;
     });
@@ -82,7 +82,8 @@ class _ClinicDetailPageState extends State<ClinicDetailPage> {
         description: descriptionController.text,
         address: addressController.text,
         webAddress: webAddressController.text,
-        credit: 0));
+        credit: 0,
+        eMail: ""));
   }
 
   void _deleteClinic() {

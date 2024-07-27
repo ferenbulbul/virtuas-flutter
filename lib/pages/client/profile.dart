@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/user.dart';
+import 'package:flutter_application_1/pages/client/change_password.dart';
 import 'package:flutter_application_1/services/dataService.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -32,9 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
       surnameController.text = user.surname;
       phoneController.text = user.phoneNumber;
 
-      emailController.addListener(_setChanged);
-      nameController.addListener(_setChanged);
-      surnameController.addListener(_setChanged);
+      
       phoneController.addListener(_setChanged);
     });
   }
@@ -85,6 +84,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: ListView(
           children: <Widget>[
             TextFormField(
+              readOnly: true,
               controller: emailController,
               decoration: const InputDecoration(labelText: 'Email'),
               validator: (value) {
@@ -95,6 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
               },
             ),
             TextFormField(
+              readOnly: true,
               controller: nameController,
               decoration: const InputDecoration(labelText: 'Name'),
               validator: (value) {
@@ -105,6 +106,7 @@ class _ProfilePageState extends State<ProfilePage> {
               },
             ),
             TextFormField(
+              readOnly: true,
               controller: surnameController,
               decoration: const InputDecoration(labelText: 'Surname'),
               validator: (value) {
@@ -157,15 +159,20 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => SetPasswordPage(userId: widget.userId),
-                //   ),
-                // );
+                Navigator.of(context).push(MaterialPageRoute(
+  builder: (context) => ChangePasswordPage(),
+));
               },
               child: const Text('Change Password'),
             ),
+            Divider(),
+            ElevatedButton(
+              onPressed: () {
+                logout;
+              },
+              child: const Text('Logout'),
+            ),
+
           ],
         ),
       ),
