@@ -23,13 +23,32 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  
 
   @override
   Widget build(BuildContext context) {
+    const int _customPrimaryValue = 0xFFf0f4ff;
+
+// Define a MaterialColor from the custom color
+const MaterialColor customMaterialColor = MaterialColor(
+  _customPrimaryValue,
+  <int, Color>{
+    50: Color(0xFFf3e5f5),
+    100: Color(0xFFe1bee7),
+    200: Color(0xFFce93d8),
+    300: Color(0xFFba68c8),
+    400: Color(0xFFab47bc),
+    500: Color(_customPrimaryValue),
+    600: Color(0xFF9c27b0),
+    700: Color(0xFF8e24aa),
+    800: Color(0xFF7b1fa2),
+    900: Color(0xFF6a1b9a),
+  },
+);
     return MaterialApp(
-      title: 'My App',
+      title: 'Vituras Health',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: customMaterialColor,                      
       ),
       home: WelcomePage(),
       routes: {
@@ -46,3 +65,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+

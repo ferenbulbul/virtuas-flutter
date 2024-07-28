@@ -43,6 +43,7 @@ dependencies:
   animated_text_kit: ^4.2.2
   provider: ^6.1.2
   shared_preferences: ^2.2.3
+  flutter_secure_storage: ^9.2.2
 
 dev_dependencies:
   flutter_test:
