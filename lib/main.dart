@@ -45,23 +45,25 @@ const MaterialColor customMaterialColor = MaterialColor(
     900: Color(0xFF6a1b9a),
   },
 );
-    return MaterialApp(
-      title: 'Vituras Health',
-      theme: ThemeData(
-        primarySwatch: customMaterialColor,                      
-      ),
-      home: WelcomePage(),
-      routes: {
-        '/admin': (context) => const AdminPage(
-              text: "",
-            ),
-        '/register': (context) => const RegistrationPage(),
-        '/login': (context) => const LoginPage(),
-        '/clientLandingPage': (context) => const ClientLandingPage(),
-        '/clinicLandingPage': (context) {
-          return const ClinicLandingPage();
+    return SafeArea(
+      child: MaterialApp(
+        title: 'Vituras Health',
+        theme: ThemeData(
+          primarySwatch: customMaterialColor,                      
+        ),
+        home: WelcomePage(),
+        routes: {
+          '/admin': (context) => const AdminPage(
+                text: "",
+              ),
+          '/register': (context) => const RegistrationPage(),
+          '/login': (context) => const LoginPage(),
+          '/clientLandingPage': (context) => const ClientLandingPage(),
+          '/clinicLandingPage': (context) {
+            return const ClinicLandingPage();
+          },
         },
-      },
+      ),
     );
   }
 }
