@@ -60,7 +60,7 @@ class _SummaryPageState extends State<SummaryPage> {
         const SnackBar(content: Text('Registered successfully!')),
       );
       Future.delayed(const Duration(seconds: 1), () {
-        Navigator.of(context).pushReplacementNamed('/login');
+        Navigator.of(context).pushReplacementNamed('/clientLandingPage');
       });
     } else {
       // Hata durumunda hata mesajını yazdırıyoruz

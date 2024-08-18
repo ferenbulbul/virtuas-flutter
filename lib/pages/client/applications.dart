@@ -3,6 +3,7 @@ import 'package:flutter_application_1/models/applications_detail.dart';
 import 'package:flutter_application_1/pages/client/application_detail.dart';
 import 'package:flutter_application_1/services/dataService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 
 class ApplicationsPage extends StatefulWidget {
   const ApplicationsPage({super.key});
@@ -35,6 +36,7 @@ class _ApplicationsPageState extends State<ApplicationsPage> {
 
   @override
   Widget build(BuildContext context) {
+    DateFormat formatter = DateFormat('dd-MM-yyyy HH:mm');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Applications'),
@@ -80,18 +82,17 @@ class _ApplicationsPageState extends State<ApplicationsPage> {
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
-                            ),
+                            ),                                                        
                             const SizedBox(height: 8.0),
                             Text(
-                              'Category Description: ${application.categoryDescription}',
+                              'On: ${formatter.format(application.applicationDate!)}',
                               style: const TextStyle(fontSize: 16),
                             ),
                             const SizedBox(height: 8.0),
-                            Text(
-                              'Application Date: ${application.applicationDate}',
+                             Text(
+                              'Offers: ${application.offerCount}',
                               style: const TextStyle(fontSize: 16),
                             ),
-                            const SizedBox(height: 8.0),
                           ],
                         ),
                       ),

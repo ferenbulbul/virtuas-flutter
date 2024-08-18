@@ -121,7 +121,7 @@ class _ClientLandingPageState extends State<ClientLandingPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.insert_drive_file),
-            label: 'Apply',
+            label: 'Applications',
           ),
         ],
         currentIndex: _selectedIndex,
