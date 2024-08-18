@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class PhoneNumberForm extends StatefulWidget {
+  const PhoneNumberForm({super.key});
+
   @override
   _PhoneNumberFormState createState() => _PhoneNumberFormState();
 }
@@ -11,18 +13,18 @@ class _PhoneNumberFormState extends State<PhoneNumberForm> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               // Handle form submission here
               String phoneNumber = _phoneNumberController.text;
               print('Phone number: $phoneNumber');
             },
-            child: Text('Submit'),
+            child: const Text('Submit'),
           ),
         ],
       ),

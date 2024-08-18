@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class SetPasswordPage extends StatelessWidget {
   final int userId;
 
-  SetPasswordPage({required this.userId});
+  SetPasswordPage({super.key, required this.userId});
 
   final _formKey = GlobalKey<FormState>();
   final TextEditingController passwordController = TextEditingController();
@@ -14,17 +14,17 @@ class SetPasswordPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Change Password'),
+        title: const Text('Change Password'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: ListView(
             children: <Widget>[
               TextFormField(
                 controller: passwordController,
-                decoration: InputDecoration(labelText: 'New Password'),
+                decoration: const InputDecoration(labelText: 'New Password'),
                 obscureText: true,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -35,7 +35,7 @@ class SetPasswordPage extends StatelessWidget {
               ),
               TextFormField(
                 controller: confirmPasswordController,
-                decoration: InputDecoration(labelText: 'Confirm Password'),
+                decoration: const InputDecoration(labelText: 'Confirm Password'),
                 obscureText: true,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -46,18 +46,18 @@ class SetPasswordPage extends StatelessWidget {
                   return null;
                 },
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     // Implement your password update logic here
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Password updated successfully')),
+                      const SnackBar(content: Text('Password updated successfully')),
                     );
                     Navigator.pop(context);
                   }
                 },
-                child: Text('Update Password'),
+                child: const Text('Update Password'),
               ),
             ],
           ),

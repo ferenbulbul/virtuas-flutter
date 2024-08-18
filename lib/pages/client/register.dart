@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class RegistrationPage extends StatelessWidget {
+  const RegistrationPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('User Registration')),
-      body: Padding(
+      appBar: AppBar(title: const Text('User Registration')),
+      body: const Padding(
         padding: EdgeInsets.all(16.0),
         child: RegistrationForm(),
       ),
@@ -16,11 +18,13 @@ class RegistrationPage extends StatelessWidget {
 }
 
 class SuccessPage extends StatelessWidget {
+  const SuccessPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Registration Successful')),
-      body: Center(
+      appBar: AppBar(title: const Text('Registration Successful')),
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -38,6 +42,8 @@ class SuccessPage extends StatelessWidget {
 }
 
 class RegistrationForm extends StatefulWidget {
+  const RegistrationForm({super.key});
+
   @override
   _RegistrationFormState createState() => _RegistrationFormState();
 }
@@ -81,9 +87,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
 
     if (response.statusCode == 200) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Registered successfully!')),
+        const SnackBar(content: Text('Registered successfully!')),
       );
-      Future.delayed(Duration(seconds: 1), () {
+      Future.delayed(const Duration(seconds: 1), () {
         Navigator.of(context).pushReplacementNamed('/login');
       });
     } else {
@@ -101,7 +107,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
         children: [
           TextFormField(
             controller: _nameController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Name',
             ),
             validator: (value) {
@@ -113,7 +119,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           ),
           TextFormField(
             controller: _surnameController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Surname',
             ),
             validator: (value) {
@@ -126,7 +132,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           TextFormField(
             controller: _emailController,
             keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Email',
             ),
             validator: (value) {
@@ -159,7 +165,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           TextFormField(
             controller: _phoneNumberController,
             keyboardType: TextInputType.phone,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Phone Number',
             ),
             validator: (value) {
@@ -174,7 +180,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           TextFormField(
             controller: _passwordController,
             obscureText: true,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Password (4 digits only)',
             ),
             validator: (value) {
@@ -191,7 +197,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           TextFormField(
             controller: _confirmPasswordController,
             obscureText: true,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Confirm Password',
             ),
             validator: (value) {
@@ -203,7 +209,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
               return null;
             },
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {
@@ -211,7 +217,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 _register();
               }
             },
-            child: Text('Register'),
+            child: const Text('Register'),
           ),
         ],
       ),
@@ -219,9 +225,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
   }
 
   bool isNumeric(String value) {
-    if (value == null) {
-      return false;
-    }
     return int.tryParse(value) != null;
   }
 

@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'package:flutter_application_1/models/add_category.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_application_1/models/category.dart';
-import 'package:flutter_application_1/models/question.dart';
 
 class CategoryService {
-  final String apiUrl = 'https://localhost:7128/api/Category/Get';
+  final String apiUrl = 'http://10.0.2.2:5241/api/Category/Get';
 
   Future<List<AddCategory>> getCategories() async {
     var response = await http.get(Uri.parse(apiUrl));
@@ -19,7 +17,7 @@ class CategoryService {
   }
 
   Future<void> updateCategory(AddCategory category) async {
-    String apiUrl = 'https://localhost:7128/api/Category/Update';
+    String apiUrl = 'http://10.0.2.2:5241/api/Category/Update';
 
     var jsonBody = jsonEncode({
       'id': category.id,
@@ -29,7 +27,7 @@ class CategoryService {
       'questions': category.questions.map((x) => x.toJson()).toList()
     });
 
-    var response = await http.put(
+    var response = await http.post(
       Uri.parse(apiUrl),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/add_category.dart';
-import 'package:flutter_application_1/models/category.dart';
 import 'package:flutter_application_1/models/question.dart';
 import 'package:flutter_application_1/services/categoryService.dart';
 
 class CategoryListPage extends StatefulWidget {
+  const CategoryListPage({super.key});
+
   @override
   _CategoryListPageState createState() => _CategoryListPageState();
 }
 
 class _CategoryListPageState extends State<CategoryListPage> {
-  CategoryService _categoryService = CategoryService();
+  final CategoryService _categoryService = CategoryService();
   List<AddCategory> _categories = [];
 
   @override
@@ -34,7 +35,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Categories'),
+        title: const Text('Categories'),
       ),
       body: ListView.builder(
         itemCount: _categories.length,
@@ -64,7 +65,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
 class CategoryDetailPage extends StatefulWidget {
   final AddCategory category;
 
-  CategoryDetailPage({required this.category});
+  const CategoryDetailPage({super.key, required this.category});
 
   @override
   _CategoryDetailPageState createState() => _CategoryDetailPageState();
@@ -73,7 +74,7 @@ class CategoryDetailPage extends StatefulWidget {
 class _CategoryDetailPageState extends State<CategoryDetailPage> {
   late AddCategory _editedCategory;
   bool _isChanged = false;
-  CategoryService _categoryService = CategoryService();
+  final CategoryService _categoryService = CategoryService();
 
   @override
   void initState() {
@@ -91,14 +92,14 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Category Detail'),
+        title: const Text('Category Detail'),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.edit),
+            icon: const Icon(Icons.edit),
             onPressed: _isChanged ? _updateCategory : null,
           ),
           IconButton(
-            icon: Icon(Icons.delete),
+            icon: const Icon(Icons.delete),
             onPressed: _deleteCategory,
           ),
         ],
@@ -110,7 +111,7 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
           children: <Widget>[
             TextFormField(
               initialValue: _editedCategory.title,
-              decoration: InputDecoration(labelText: 'Title'),
+              decoration: const InputDecoration(labelText: 'Title'),
               onChanged: (value) {
                 setState(() {
                   _editedCategory.title = value;
@@ -120,7 +121,7 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
             ),
             TextFormField(
               initialValue: _editedCategory.description,
-              decoration: InputDecoration(labelText: 'Description'),
+              decoration: const InputDecoration(labelText: 'Description'),
               onChanged: (value) {
                 setState(() {
                   _editedCategory.description = value;
@@ -130,7 +131,7 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
             ),
             TextFormField(
               initialValue: _editedCategory.credit.toString(),
-              decoration: InputDecoration(labelText: 'Credit'),
+              decoration: const InputDecoration(labelText: 'Credit'),
               keyboardType: TextInputType.number,
               onChanged: (value) {
                 setState(() {
@@ -139,12 +140,12 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
                 });
               },
             ),
-            SizedBox(height: 16.0),
-            Text(
+            const SizedBox(height: 16.0),
+            const Text(
               'Questions',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Expanded(
               child: ListView.builder(
                 itemCount: _editedCategory.questions.length,
@@ -165,7 +166,7 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
                         ),
                       ),
                       IconButton(
-                        icon: Icon(Icons.delete),
+                        icon: const Icon(Icons.delete),
                         onPressed: () {
                           setState(() {
                             _editedCategory.questions.removeAt(index);
@@ -178,10 +179,10 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
                 },
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: _addQuestion,
-              child: Text('Add Question'),
+              child: const Text('Add Question'),
             ),
           ],
         ),
@@ -192,7 +193,7 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
   void _updateCategory() async {
     try {
       await _categoryService.updateCategory(_editedCategory);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Category updated successfully'),
       ));
       setState(() {
@@ -200,7 +201,7 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
       });
     } catch (e) {
       print('Failed to update category: $e');
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Failed to update category'),
       ));
     }
@@ -210,12 +211,12 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
     try {
       await _categoryService.deleteCategory(_editedCategory.id);
       Navigator.pop(context); // Detay sayfasını kapat
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Category deleted successfully'),
       ));
     } catch (e) {
       print('Failed to delete category: $e');
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Failed to delete category'),
       ));
     }

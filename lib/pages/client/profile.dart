@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/user.dart';
+import 'package:flutter_application_1/pages/client/change_password.dart';
 import 'package:flutter_application_1/services/dataService.dart';
 
 class ProfilePage extends StatefulWidget {
   final int userId;
 
-  ProfilePage({required this.userId});
+  const ProfilePage({super.key, required this.userId});
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -32,9 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
       surnameController.text = user.surname;
       phoneController.text = user.phoneNumber;
 
-      emailController.addListener(_setChanged);
-      nameController.addListener(_setChanged);
-      surnameController.addListener(_setChanged);
+      
       phoneController.addListener(_setChanged);
     });
   }
@@ -58,19 +57,19 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: const Text('Profile'),
       ),
       body: FutureBuilder<User>(
         future: futureUser,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (snapshot.hasData) {
             return _buildProfileForm(snapshot.data!);
           } else {
-            return Center(child: Text('No data'));
+            return const Center(child: Text('No data'));
           }
         },
       ),
@@ -79,14 +78,15 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget _buildProfileForm(User user) {
     return Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Form(
         key: _formKey,
         child: ListView(
           children: <Widget>[
             TextFormField(
+              readOnly: true,
               controller: emailController,
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: const InputDecoration(labelText: 'Email'),
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter your email';
@@ -95,8 +95,9 @@ class _ProfilePageState extends State<ProfilePage> {
               },
             ),
             TextFormField(
+              readOnly: true,
               controller: nameController,
-              decoration: InputDecoration(labelText: 'Name'),
+              decoration: const InputDecoration(labelText: 'Name'),
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter your name';
@@ -105,8 +106,9 @@ class _ProfilePageState extends State<ProfilePage> {
               },
             ),
             TextFormField(
+              readOnly: true,
               controller: surnameController,
-              decoration: InputDecoration(labelText: 'Surname'),
+              decoration: const InputDecoration(labelText: 'Surname'),
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter your surname';
@@ -116,7 +118,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             TextFormField(
               controller: phoneController,
-              decoration: InputDecoration(labelText: 'Phone Number'),
+              decoration: const InputDecoration(labelText: 'Phone Number'),
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please enter your phone number';
@@ -124,7 +126,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 return null;
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _isChanged
                   ? () {
@@ -138,7 +140,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         );
                         updateUser(updatedUser).then((updatedUser) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
+                            const SnackBar(
                                 content: Text('Profile updated successfully')),
                           );
                           setState(() {
@@ -146,26 +148,31 @@ class _ProfilePageState extends State<ProfilePage> {
                           });
                         }).catchError((error) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Failed to update profile')),
+                            const SnackBar(content: Text('Failed to update profile')),
                           );
                         });
                       }
                     }
                   : null,
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => SetPasswordPage(userId: widget.userId),
-                //   ),
-                // );
+                Navigator.of(context).push(MaterialPageRoute(
+  builder: (context) => ChangePasswordPage(),
+));
               },
-              child: Text('Change Password'),
+              child: const Text('Change Password'),
             ),
+            Divider(),
+            ElevatedButton(
+              onPressed: () {
+                logout;
+              },
+              child: const Text('Logout'),
+            ),
+
           ],
         ),
       ),

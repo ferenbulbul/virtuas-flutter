@@ -5,6 +5,7 @@ class Clinic {
   final String address;
   final String webAddress;
   int credit;
+  final String eMail;
 
   Clinic(
       {required this.id,
@@ -12,7 +13,8 @@ class Clinic {
       required this.description,
       required this.address,
       required this.webAddress,
-      required this.credit});
+      required this.credit,
+      required this.eMail});
 
   factory Clinic.fromJson(Map<String, dynamic> json) {
     return Clinic(
@@ -21,7 +23,9 @@ class Clinic {
         description: json['description'],
         address: json['address'],
         webAddress: json['webAddress'],
-        credit: json['credit']);
+        credit: json['credit'],
+        eMail: json['email'])
+        ;
   }
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -29,6 +33,7 @@ class Clinic {
         'description': description,
         'address': address,
         'webAddress': webAddress,
-        'credit': credit
+        'credit': credit,
+        'email' : eMail
       };
 }

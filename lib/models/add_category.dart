@@ -1,7 +1,5 @@
-import 'package:flutter_application_1/models/category.dart';
 import 'package:flutter_application_1/models/question.dart';
 
-import 'dart:convert';
 
 class AddCategory {
   int id;

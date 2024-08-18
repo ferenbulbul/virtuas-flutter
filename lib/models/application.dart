@@ -6,6 +6,8 @@ class Application {
   String? categoryTitle;
   String? categoryDescription;
   List<AnswerAndQuestion>? answers;
+  int? offerCount;
+  List<String>? offeredClinics;
 
   Application({
     this.applicationId,
@@ -13,6 +15,8 @@ class Application {
     this.categoryTitle,
     this.categoryDescription,
     this.answers,
+    this.offerCount,
+    this.offeredClinics
   });
 
   factory Application.fromJson(Map<String, dynamic> json) {
@@ -24,6 +28,8 @@ class Application {
       answers: (json['answers'] as List)
           .map((answer) => AnswerAndQuestion.fromJson(answer))
           .toList(),
+      offerCount: json['offerCount'],
+      offeredClinics: json['offerdClinics']
     );
   }
 
@@ -34,6 +40,8 @@ class Application {
       'categoryTitle': categoryTitle,
       'categoryDescription': categoryDescription,
       'answers': answers?.map((answer) => answer.toJson()).toList(),
+      'offerCount' : offerCount,
+      'offerdClinics' : offeredClinics
     };
   }
 }

@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/pages/clinic/clinic_info.dart';
+import 'package:flutter_application_1/pages/clinic/clinic_services.dart';
 import 'package:flutter_application_1/pages/clinic/possible_customers.dart';
-import 'package:flutter_application_1/pages/common/login.dart';
+import 'package:flutter_application_1/pages/clinic/sent_offers.dart';
+import 'package:flutter_application_1/services/dataService.dart';
+import 'package:flutter_application_1/utils/color_select.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Import your actual screens
 
 class ClinicLandingPage extends StatefulWidget {
+  const ClinicLandingPage({
+    Key? key,
+  }) : super(key: key);
+
   @override
   _ClinicLandingPageState createState() => _ClinicLandingPageState();
 }
@@ -20,84 +30,110 @@ class _ClinicLandingPageState extends State<ClinicLandingPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Clinic Landing Page'),
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: const Icon(Icons.menu),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-            );
-          },
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          leading: Builder(
+            builder: (BuildContext context) {
+              return RawMaterialButton(
+                child: const Icon(
+                    size: 40.0, color: ColorSelect.secondary, Icons.menu_sharp),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+              );
+            },
+          ),
+          actions: <Widget>[
+            RawMaterialButton(
+              onPressed: () {},
+              fillColor: ColorSelect.secondary,
+              padding: const EdgeInsets.all(10.0),
+              shape: const CircleBorder(),
+              child: const Icon(
+                Icons.person_2_sharp,
+                size: 25.0,
+                color: ColorSelect.background,
+              ),
+            )
+          ],
         ),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            Container(
-              height: 150.0,
-              child: DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                ),
-                child: Text(
-                  'Vituras',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              const SizedBox(
+                height: 150.0,
+                child: DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                  ),
+                  child: Text(
+                    'Vituras',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
                   ),
                 ),
               ),
-            ),
-            ListTile(
-              leading: Icon(Icons.notifications),
-              title: Text('Possible customers'),
-              onTap: () {
-                _tabController.index = 0;
-                Navigator.of(context).pop(); // Close the drawer
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Services'),
-              onTap: () {
-                _tabController.index = 1;
-                Navigator.of(context).pop(); // Close the drawer
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.arrow_back),
-              title: Text('Sent Offers'),
-              onTap: () {
-                _tabController.index = 2;
-                Navigator.of(context).pop(); // Close the drawer
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.person),
-              title: Text('Clinic Info'),
-              onTap: () {
-                _tabController.index = 3;
-                Navigator.of(context).pop(); // Close the drawer
-              },
-            ),
+              ListTile(
+                leading: const Icon(Icons.notifications),
+                title: const Text('Possible customers'),
+                onTap: () {
+                  _tabController.index = 0;
+                  Navigator.of(context).pop(); // Close the drawer
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.home),
+                title: const Text('Services'),
+                onTap: () {
+                  _tabController.index = 1;
+                  Navigator.of(context).pop(); // Close the drawer
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.arrow_back),
+                title: const Text('Sent Offers'),
+                onTap: () {
+                  _tabController.index = 2;
+                  Navigator.of(context).pop(); // Close the drawer
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.person),
+                title: const Text('Clinic Info'),
+                onTap: () {
+                  _tabController.index = 3;
+                  Navigator.of(context).pop(); // Close the drawer
+                },
+              ),
+              Divider(), // Optional: Add a divider before logout button
+              ListTile(
+                leading: const Icon(Icons.exit_to_app),
+                title: const Text('Logout'),
+                onTap: () {
+                  logout;
+                  // Implement logout logic here
+                  Navigator.of(context).pop(); // Close the drawer
+                  // Example: Navigate to login page
+
+                  Navigator.pushReplacementNamed(context, '/login');
+                },
+              ),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          controller: _tabController,
+          children: [
+            const PossibleClientPreDataScreen(),
+            ClinicServicesPage(),
+            SentOffersPage(),
+            ClinicInfoPage()
           ],
         ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          PossibleClientPreDataScreen(),
-          // Replace the following with your actual pages
-          Center(child: Text('Services Page')),
-          Center(child: Text('Sent Offers Page')),
-          Center(child: Text('Clinic Info Page')),
-        ],
       ),
     );
   }
